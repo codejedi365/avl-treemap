@@ -1,7 +1,7 @@
 /**
  * TreeMap Utility
  * AVL Tree Balancing + KeyValMapping as Tree.fetch(key) returns tNode.data
- * codejedi365 | MIT License | DD MMM YYYY
+ * codejedi365 | MIT License | 17 Aug 2021
  */
 
 // DISABLE LINT REASON: Need to set private class of node for tree class
@@ -117,12 +117,12 @@ export class TreeMap<K, T> {
 
   last(this: TreeMap<K, T>): T | false {
     const values = this.dfsValues();
-    return values[values.length - 1];
+    return values.pop() || false;
   }
 
   lastKey(this: TreeMap<K, T>): K | false {
     const keys = this.dfsKeys();
-    return keys[keys.length - 1];
+    return keys.pop() || false;
   }
 
   fetch(this: TreeMap<K, T>, key: K): T | null {
@@ -229,23 +229,22 @@ export class TreeMap<K, T> {
   ): boolean {
     // Internal Recursive function
     function compareNInsert(
-      this: TreeMap<K, T>,
-      compareFn: (n1: LeafNode<K, T>, n2: LeafNode<K, T>) => -1 | 0 | 1,
+      tmap: TreeMap<K, T>,
       head: LeafNode<K, T>,
       floatingLeaf: LeafNode<K, T>
     ): boolean {
       const node = head;
-      const comparison = compareFn(node, floatingLeaf);
+      const comparison = tmap.compare(node, floatingLeaf);
       if (comparison > 0) {
         if (node.right !== null) {
-          compareNInsert.call(this, compareFn, node.right, floatingLeaf);
+          compareNInsert(tmap, node.right, floatingLeaf);
         } else {
           node.right = floatingLeaf;
           floatingLeaf.setParent(node);
         }
       } else if (comparison < 0) {
         if (node.left !== null) {
-          compareNInsert.call(this, compareFn, node.left, floatingLeaf);
+          compareNInsert(tmap, node.left, floatingLeaf);
         } else {
           node.left = floatingLeaf;
           floatingLeaf.setParent(node);
@@ -254,14 +253,14 @@ export class TreeMap<K, T> {
         node.data = floatingLeaf.data;
         return false;
       }
-      return skipBalance ? false : TreeMap.balanceTree(this, node);
+      return skipBalance ? false : TreeMap.balanceTree(tmap, node);
     }
 
     if (!tree.root) {
       TreeMap.setRoot(tree, leaf);
       return true;
     }
-    return compareNInsert.call(tree, tree.compare, tree.root, leaf);
+    return compareNInsert(tree, tree.root, leaf);
   }
 
   add(this: TreeMap<K, T>, key: K, value: T): TreeMap<K, T> {
@@ -273,7 +272,7 @@ export class TreeMap<K, T> {
 
   merge(this: TreeMap<K, T>, tree: TreeMap<K, T>): TreeMap<K, T> | false {
     return Object.getPrototypeOf(tree) === TreeMap.prototype
-      ? TreeMap.insertSubtree(this, tree, false)
+      ? TreeMap.insertSubtree(this, tree)
       : false;
   }
 
@@ -323,8 +322,7 @@ export class TreeMap<K, T> {
   }
 
   removeAll(this: TreeMap<K, T>): TreeMap<K, T> {
-    this.root = null;
-    return this;
+    return TreeMap.setRoot(this, null);
   }
 
   dfTraversal<R>(
@@ -474,33 +472,26 @@ export class TreeMap<K, T> {
     return true;
   }
 
-  /**
-   *
-   * @param tree
-   * @param head
-   * @param skipBalance Boolean flag for toggling autobalancing.
-   *                    Default is to autobalance.
-   * @returns
-   */
-  private static rotationLeft<K, T>(
+  private static rotate<K, T>(
     tree: TreeMap<K, T>,
-    head: LeafNode<K, T>,
-    skipBalance = false
-  ): LeafNode<K, T> {
-    const oldHead = head;
+    descendingNode: LeafNode<K, T>,
+    risingNode: LeafNode<K, T>,
+    skipBalance: boolean
+  ) {
+    const oldHead = descendingNode;
     const parentNode = oldHead.parent; // Capture original parent
 
-    if (!oldHead.right) {
-      throw new Error(
-        "RotateLeft() should not be happening if right child is null."
-      );
-    }
-    // console.log(`Node[${oldHead.key}].RotateLeft()`);
+    // console.log(`Node[${oldHead.key}].Rotate()`);
 
     // 1. Capture newHead as a subtree
-    const newHeadTree = tree.sliceTree(oldHead.right);
-    // 2. Disconnect newHead from oldHead node
-    oldHead.right = null;
+    const newHeadTree = tree.sliceTree(risingNode);
+    // 2. Disconnect newHead from oldHead node after determining which side is the newHead
+    const isLeftSideRising = oldHead.left === risingNode;
+    if (isLeftSideRising) {
+      oldHead.left = null;
+    } else {
+      oldHead.right = null;
+    }
     // 3. Create subtree for what is remaining of oldHead's descendants
     const oldHeadSubtree = tree.sliceTree(oldHead);
     // console.log(
@@ -536,82 +527,53 @@ export class TreeMap<K, T> {
     return newHeadNode;
   }
 
+  /**
+   *
+   * @param tree
+   * @param head
+   * @param skipBalance Boolean flag for toggling autobalancing.
+   *                    Default is to autobalance.
+   * @returns
+   */
+  private static rotationLeft<K, T>(
+    tree: TreeMap<K, T>,
+    head: LeafNode<K, T>,
+    skipBalance = false
+  ): LeafNode<K, T> {
+    if (!head.right) {
+      throw new Error(
+        "RotateLeft() should not be happening if right child is null."
+      );
+    }
+    return TreeMap.rotate(tree, head, head.right, skipBalance);
+  }
+
   private static rotationRight<K, T>(
     tree: TreeMap<K, T>,
     head: LeafNode<K, T>,
     skipBalance = false
   ): LeafNode<K, T> {
-    const oldHead = head;
-    const parentNode = oldHead.parent; // Capture original parent
-
-    if (!oldHead.left) {
+    if (!head.left) {
       throw new Error(
         "RotateRight() should not be happening if left child is null."
       );
     }
-    // console.log(`Node[${oldHead.key}].RotateRight()`);
-
-    // 1. Capture newHead as a subtree
-    const newHeadTree = tree.sliceTree(oldHead.left);
-    // 2. Disconnect newHead from oldHead node
-    oldHead.left = null;
-    // 3. Create subtree for what is remaining of oldHead's descendants
-    const oldHeadSubtree = tree.sliceTree(oldHead);
-    // console.log(
-    //   [
-    //     `[newHeadTree] bfsKeys = ${newHeadTree.bfsKeys().toString()}`,
-    //     `[oldHeadSubtree] bfsKeys = ${oldHeadSubtree.bfsKeys().toString()}`
-    //   ].join("\n")
-    // );
-    if (!skipBalance) {
-      // 3.5 Rebalance oldHead's partial tree since it just lost its left side
-      TreeMap.balanceTree(oldHeadSubtree);
-    }
-    // 4. Re-Insert oldHead's rebalanced subtree onto newHead's subtree while keeping rest of references in-tact
-    // Ensures balancing will happen recursively from insertion point up the subtree
-    TreeMap.insert(newHeadTree, oldHeadSubtree.root!, skipBalance); // eslint-disable-line @typescript-eslint/no-non-null-assertion
-    // 5. set newCompleteSubtree.root's parent as oldHead's parent
-    const newHeadNode = newHeadTree.root!.setParent(parentNode); // eslint-disable-line @typescript-eslint/no-non-null-assertion
-    // console.log(
-    //   `[combinedHeadTree] bfsKeys = ${newHeadTree.bfsKeys().toString()}`
-    // );
-    // 6. Glue newHead & its subtree into complete tree
-    if (parentNode !== null) {
-      // previous Head was not root (which means newHead is not the new root)
-      const isLeftSideDescendent = parentNode.left === oldHead;
-      if (isLeftSideDescendent) {
-        parentNode.left = newHeadNode;
-      } else {
-        parentNode.right = newHeadNode;
-      }
-    } else {
-      TreeMap.setRoot(tree, newHeadNode);
-    }
-    return newHeadNode;
+    return TreeMap.rotate(tree, head, head.left, skipBalance);
   }
 
   private static insertSubtree<K, T>(
     targetTree: TreeMap<K, T>,
-    subtree: TreeMap<K, T> | LeafNode<K, T>,
-    skipBalance: boolean
+    srcTree: TreeMap<K, T>
   ): TreeMap<K, T> {
     const KEY = 0;
     const DATA = 1;
-    const srcTree: TreeMap<K, T> =
-      Object.getPrototypeOf(subtree) === LeafNode.prototype
-        ? TreeMap.setRoot(
-            new TreeMap<K, T>(),
-            (subtree as LeafNode<K, T>).parent
-          )
-        : (subtree as TreeMap<K, T>);
-
     const breadthFirstEntries = srcTree.bfsEntries();
     for (let k = 0; k < breadthFirstEntries.length; k++) {
       const detachedLeaf = new LeafNode<K, T>(
         breadthFirstEntries[k][KEY],
         breadthFirstEntries[k][DATA]
       );
-      TreeMap.insert(targetTree, detachedLeaf, skipBalance);
+      TreeMap.insert(targetTree, detachedLeaf, false);
     }
     return targetTree;
   }
