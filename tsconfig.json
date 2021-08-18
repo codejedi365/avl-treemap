@@ -12,7 +12,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "declaration": true,
+    "declarationDir": "dist"
   },
   "include": [
     "src",
