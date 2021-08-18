@@ -23,12 +23,11 @@ describe("treemap.ts", () => {
     data: "five"
   };
   const entryOrder = [
+    // The entry rrder does not cause any rotation by default
     entry2Node,
     entry1Node,
     entry5Node,
-    // Forces 2x rotates in opposite directions (next 2 steps)
-    entry3Node,
-    entry4Node
+    entry3Node
   ];
 
   beforeEach(() => {
@@ -71,7 +70,6 @@ describe("treemap.ts", () => {
       entry1Node.key,
       entry2Node.key,
       entry3Node.key,
-      entry4Node.key,
       entry5Node.key
     ]);
   });
@@ -81,9 +79,8 @@ describe("treemap.ts", () => {
     expect(tmap.keys()).toEqual<(string | number)[]>([
       entry2Node.key,
       entry1Node.key,
-      entry4Node.key,
-      entry3Node.key,
-      entry5Node.key
+      entry5Node.key,
+      entry3Node.key
     ]);
   });
 
@@ -92,7 +89,6 @@ describe("treemap.ts", () => {
       entry1Node.key,
       entry2Node.key,
       entry3Node.key,
-      entry4Node.key,
       entry5Node.key
     ]);
   });
@@ -101,9 +97,8 @@ describe("treemap.ts", () => {
     expect(tmap.bfsKeys()).toEqual<(string | number)[]>([
       entry2Node.key,
       entry1Node.key,
-      entry4Node.key,
-      entry3Node.key,
-      entry5Node.key
+      entry5Node.key,
+      entry3Node.key
     ]);
   });
 
@@ -112,7 +107,6 @@ describe("treemap.ts", () => {
       entry1Node.data,
       entry2Node.data,
       entry3Node.data,
-      entry4Node.data,
       entry5Node.data
     ]);
   });
@@ -122,9 +116,8 @@ describe("treemap.ts", () => {
     expect(tmap.values()).toEqual<unknown[]>([
       entry2Node.data,
       entry1Node.data,
-      entry4Node.data,
-      entry3Node.data,
-      entry5Node.data
+      entry5Node.data,
+      entry3Node.data
     ]);
   });
 
@@ -133,7 +126,6 @@ describe("treemap.ts", () => {
       entry1Node.data,
       entry2Node.data,
       entry3Node.data,
-      entry4Node.data,
       entry5Node.data
     ]);
   });
@@ -142,9 +134,8 @@ describe("treemap.ts", () => {
     expect(tmap.bfsValues()).toEqual<unknown[]>([
       entry2Node.data,
       entry1Node.data,
-      entry4Node.data,
-      entry3Node.data,
-      entry5Node.data
+      entry5Node.data,
+      entry3Node.data
     ]);
   });
 
@@ -153,7 +144,6 @@ describe("treemap.ts", () => {
       [entry1Node.key, entry1Node.data],
       [entry2Node.key, entry2Node.data],
       [entry3Node.key, entry3Node.data],
-      [entry4Node.key, entry4Node.data],
       [entry5Node.key, entry5Node.data]
     ]);
   });
@@ -163,9 +153,8 @@ describe("treemap.ts", () => {
     expect(tmap.allEntries()).toEqual<[number, string][]>([
       [entry2Node.key, entry2Node.data],
       [entry1Node.key, entry1Node.data],
-      [entry4Node.key, entry4Node.data],
-      [entry3Node.key, entry3Node.data],
-      [entry5Node.key, entry5Node.data]
+      [entry5Node.key, entry5Node.data],
+      [entry3Node.key, entry3Node.data]
     ]);
   });
 
@@ -174,7 +163,6 @@ describe("treemap.ts", () => {
       [entry1Node.key, entry1Node.data],
       [entry2Node.key, entry2Node.data],
       [entry3Node.key, entry3Node.data],
-      [entry4Node.key, entry4Node.data],
       [entry5Node.key, entry5Node.data]
     ]);
   });
@@ -183,9 +171,8 @@ describe("treemap.ts", () => {
     expect(tmap.bfsEntries()).toEqual<[number, string][]>([
       [entry2Node.key, entry2Node.data],
       [entry1Node.key, entry1Node.data],
-      [entry4Node.key, entry4Node.data],
-      [entry3Node.key, entry3Node.data],
-      [entry5Node.key, entry5Node.data]
+      [entry5Node.key, entry5Node.data],
+      [entry3Node.key, entry3Node.data]
     ]);
   });
 
@@ -226,22 +213,25 @@ describe("treemap.ts", () => {
 
   it("tree rotates left to ensure balance", () => {
     // add weight to right side
+    tmap.add(entry4Node.key, entry4Node.data);
     tmap.add(6, "six");
-    tmap.add(7, "seven");
-    expect(tmap.bfsKeys()).toEqual<number[]>([4, 2, 6, 1, 3, 5, 7]);
+    expect(tmap.bfsKeys()).toEqual<number[]>([4, 2, 5, 1, 3, 6]);
   });
 
   it("tree rotates right to ensure balance", () => {
     // add weight to left side
     tmap.add(0, "zero");
     tmap.add(-1, "neg1");
-    expect(tmap.bfsKeys()).toEqual<number[]>([2, 0, 4, -1, 1, 3, 5]);
+    expect(tmap.bfsKeys()).toEqual<number[]>([2, 0, 5, -1, 1, 3]);
   });
 
   it("merge(tree) combines 2 trees into 1 sorted representation", () => {
+    const entry6Node = { key: 6, data: "six" };
+    const entry7Node = { key: 7, data: "seven" };
     const subtree = new TreeMap<number, string>();
-    subtree.add(6, "six");
-    subtree.add(7, "seven");
+    subtree.add(entry4Node.key, entry4Node.data);
+    subtree.add(entry6Node.key, entry6Node.data);
+    subtree.add(entry7Node.key, entry7Node.data);
     tmap.merge(subtree);
     expect(tmap.dfsKeys()).toEqual<(string | number)[]>([
       entry1Node.key,
@@ -249,17 +239,17 @@ describe("treemap.ts", () => {
       entry3Node.key,
       entry4Node.key,
       entry5Node.key,
-      6,
-      7
+      entry6Node.key,
+      entry7Node.key
     ]);
     expect(tmap.bfsKeys()).toEqual<(string | number)[]>([
-      entry4Node.key,
-      entry2Node.key,
-      6,
-      entry1Node.key,
       entry3Node.key,
+      entry2Node.key,
       entry5Node.key,
-      7
+      entry1Node.key,
+      entry4Node.key,
+      entry6Node.key,
+      entry7Node.key
     ]);
   });
 
@@ -278,7 +268,6 @@ describe("treemap.ts", () => {
     expect(tmap.dfsKeys()).toEqual<(string | number)[]>([
       entry1Node.key,
       entry3Node.key,
-      entry4Node.key,
       entry5Node.key
     ]);
   });
@@ -289,6 +278,7 @@ describe("treemap.ts", () => {
     //         they point at the same function after a clone
     //-------------------------------------------------------
     // Setup: Using global tree which ensures target has 2 children
+    tmap.add(entry4Node.key, entry4Node.data);
     // Execute function under test
     const subtree: typeof tmap | false = tmap.subtree(entry4Node.key);
     expect(subtree).toBeTruthy();
@@ -329,7 +319,6 @@ describe("treemap.ts", () => {
             `${Object.values(entry1Node).join("='")}'`,
             `${Object.values(entry2Node).join("='")}'`,
             `${Object.values(entry3Node).join("='")}'`,
-            `${Object.values(entry4Node).join("='")}'`,
             `${Object.values(entry5Node).join("='")}'`
           ].join(", ")}]`
         ].join(", "),
