@@ -26,7 +26,10 @@ function buildConfig(env) {
         {
           test: /(?<!\.test)\.(ts)$/i,
           loader: "ts-loader",
-          exclude: ["/node_modules/", "/test/", "/**/__tests__/"]
+          options: {
+            onlyCompileBundledFiles: true
+          },
+          exclude: ["/node_modules/"]
         }
       ]
     },
