@@ -1,4 +1,10 @@
-import { TreeMap, TreeAlgorithm } from "../treemap";
+/**
+ * -----------------------------------------------------
+ * Unit-Tests: TreeMap.js exported functionality
+ * codejedi365 | MIT License | 22 Aug 2021
+ * -----------------------------------------------------
+ */
+import { TreeMap, TreeAlgorithm, StopSearchException } from "../treemap";
 
 describe("treemap.ts", () => {
   let tmap: TreeMap<number, string>;
@@ -190,7 +196,7 @@ describe("treemap.ts", () => {
     expect(tmap.size()).toEqual(entryOrder.length + 1);
   });
 
-  it("size() decreases value as tree grows", () => {
+  it("size() decreases value as tree shrinks", () => {
     expect(tmap.size()).toEqual(entryOrder.length);
     tmap.remove(entry1Node.key);
     expect(tmap.size()).toEqual(entryOrder.length - 1);
@@ -199,6 +205,62 @@ describe("treemap.ts", () => {
   it("size() === 0 when tree is empty", () => {
     const emptyTree = new TreeMap();
     expect(emptyTree.size()).toEqual<number>(0);
+  });
+
+  it("height() === 0 when tree is empty", () => {
+    const emptyTree = new TreeMap();
+    expect(emptyTree.height()).toEqual<number>(0);
+  });
+
+  it("height() returns number of layers (depth) in the tree", () => {
+    expect(tmap.height()).toEqual<number>(
+      Math.floor(Math.log2(entryOrder.length)) + 1
+    );
+  });
+
+  it("height() decreases as tree drops a layer", () => {
+    const removed = [];
+    function removeNode<K, T>(
+      tree: TreeMap<K, T>,
+      entryNode: { key: K; data: T }
+    ) {
+      tree.remove(entryNode.key);
+      removed.push(entryNode);
+    }
+    expect(entryOrder.length).toEqual(4);
+    expect(tmap.height()).toEqual<number>(
+      Math.floor(Math.log2(entryOrder.length)) + 1
+    );
+    removeNode(tmap, entry1Node);
+    expect(tmap.height()).toEqual<number>(
+      Math.floor(Math.log2(entryOrder.length - removed.length)) + 1
+    );
+  });
+
+  it("height() increases as tree adds another layer of depth", () => {
+    const added = [];
+    // Helper function to track insertions as they happen
+    function insertNode<K, T>(
+      tree: TreeMap<K, T>,
+      entryNode: { key: K; data: T }
+    ) {
+      tree.add(entryNode.key, entryNode.data);
+      added.push(entryNode);
+    }
+    // Ensure test starts as expected
+    expect(entryOrder.length).toEqual(4);
+    expect(tmap.height()).toEqual<number>(
+      Math.floor(Math.log2(entryOrder.length)) + 1
+    );
+    // Manipulate Map
+    insertNode(tmap, entry4Node);
+    insertNode(tmap, { key: 6, data: "six" });
+    insertNode(tmap, { key: 7, data: "seven" });
+    insertNode(tmap, { key: 0, data: "zero" });
+    // Check that a new layer has been accounted for
+    expect(tmap.height()).toEqual<number>(
+      Math.floor(Math.log2(entryOrder.length + added.length)) + 1
+    );
   });
 
   it("removeAll() clears all nodes and returns empty tree", () => {
@@ -215,14 +277,21 @@ describe("treemap.ts", () => {
     expect(emptyTree.fetch(entry1Node.key)).toEqual(entry1Node.data);
   });
 
-  it("tree rotates left to ensure balance", () => {
+  it("add(key, value) overwrites previous data if the key already exists in tree", () => {
+    const newData = "DATA";
+    expect(tmap.isKey(entry1Node.key)).toBeTruthy();
+    tmap.add(entry1Node.key, newData);
+    expect(tmap.fetch(entry1Node.key)).toEqual(newData);
+  });
+
+  it("upon add(...), tree rotates left to ensure balance", () => {
     // add weight to right side
     tmap.add(entry4Node.key, entry4Node.data);
     tmap.add(6, "six");
     expect(tmap.bfsKeys()).toEqual<number[]>([4, 2, 5, 1, 3, 6]);
   });
 
-  it("tree rotates right to ensure balance", () => {
+  it("upon add(...), tree rotates right to ensure balance", () => {
     // add weight to left side
     tmap.add(0, "zero");
     tmap.add(-1, "neg1");
@@ -264,7 +333,7 @@ describe("treemap.ts", () => {
     expect(tmap.isKey(entry1Node.key)).toBeFalsy();
   });
 
-  it("tree handles removal of root node", () => {
+  it("remove(tree.root) removes & rebalances tree with remaining values", () => {
     let prevSize = tmap.size();
     tmap.remove(entry2Node.key);
     expect(tmap.size()).toEqual<number>(--prevSize);
@@ -328,6 +397,7 @@ describe("treemap.ts", () => {
       tmap.bfTraversal<ExplicitObj>((node, captureArray) => {
         if (node.key === entry3Node.key && node.data === entry3Node.data) {
           captureArray.push({ key: node.key, data: node.data });
+          throw new StopSearchException("Found the data I was looking for!");
         }
       })
     ).toEqual<ExplicitObj[]>([entry3Node]);
