@@ -35,7 +35,7 @@ function buildConfig(env) {
     },
     optimization: {
       // minimize & mangle the output files (TerserPlugin w/ webpack@v5)
-      minimize: env.mode === "production",
+      minimize: isProduction,
       // determine which exports are used by modules and removed unused ones
       usedExports: true
     },
