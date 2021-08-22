@@ -1,6 +1,7 @@
 const isProduction = process.env.NODE_ENV === "production";
 const path = require("path");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const nodeExternals = require("webpack-node-externals");
 const thisModule = require("./package.json");
 
 function buildConfig(env) {
@@ -42,6 +43,7 @@ function buildConfig(env) {
     resolve: {
       extensions: [".ts", ".js", ".json"]
     },
+    externals: [nodeExternals()], // ignore all modules in node_modules folder (ie. do not bundle runtime dependencies)
     externalsPresets: {
       node: true // ignore node built-in modules like path, fs, etc.
     }
