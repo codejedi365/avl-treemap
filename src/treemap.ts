@@ -1,7 +1,7 @@
 /**
  * TreeMap Utility
  * AVL Tree Balancing + KeyValMapping as Tree.fetch(key) returns tNode.data
- * codejedi365 | MIT License | 17 Aug 2021
+ * codejedi365 | MIT License | 22 Aug 2021
  */
 
 // DISABLE LINT REASON: Need to set private class of node for tree class
@@ -201,6 +201,10 @@ export class TreeMap<K, T> {
 
   size(this: TreeMap<K, T>): number {
     return this.keys().length;
+  }
+
+  height(this: TreeMap<K, T>): number {
+    return !this.root ? 0 : this.root.height + 1;
   }
 
   private static binarySearch<K, T>(
@@ -638,15 +642,8 @@ export class TreeMap<K, T> {
   }
 
   print(this: TreeMap<K, T>): void {
-    process.stdout.write(this.toString());
+    console.log(this.toString()); // eslint-disable-line no-console
   }
-
-  /**
-   * Pretty Print tree keys (multiline)
-   */
-  // pprint(): void {
-  //   //
-  // }
 }
 
 export default TreeMap;

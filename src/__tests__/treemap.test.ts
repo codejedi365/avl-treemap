@@ -37,6 +37,10 @@ describe("treemap.ts", () => {
     });
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("first() returns first node's data", () => {
     expect(tmap.first()).toEqual(entry1Node.data);
   });
@@ -297,16 +301,36 @@ describe("treemap.ts", () => {
     /* eslint-enable @typescript-eslint/unbound-method */
   });
 
-  it.skip("custom compare() override", () => {
-    //
+  it("custom compare() override", () => {
+    const customTMap = new TreeMap<number, string>();
+    customTMap.compare = function descOrder(node1, node2) {
+      return node1.key > node2.key ? 1 : node1.key < node2.key ? -1 : 0; // eslint-disable-line no-nested-ternary
+    };
+    entryOrder.forEach((entryNode) => {
+      customTMap.add(entryNode.key, entryNode.data);
+    });
+    expect(customTMap.dfsKeys()).toEqual<number[]>(tmap.dfsKeys().reverse());
   });
 
-  it.skip("custom handler depth-first traversal", () => {
-    //
+  it("custom handler depth-first traversal", () => {
+    expect(
+      tmap.dfTraversal<{ key: number; data: string }>((node, captureArray) => {
+        if (node.key === entry3Node.key && node.data === entry3Node.data) {
+          captureArray.push({ key: node.key, data: node.data });
+        }
+      })
+    ).toEqual<{ key: number; data: string }[]>([entry3Node]);
   });
 
-  it.skip("custom handler breadth-first traversal", () => {
-    //
+  it("custom handler breadth-first traversal", () => {
+    type ExplicitObj = { key: number; data: string };
+    expect(
+      tmap.bfTraversal<ExplicitObj>((node, captureArray) => {
+        if (node.key === entry3Node.key && node.data === entry3Node.data) {
+          captureArray.push({ key: node.key, data: node.data });
+        }
+      })
+    ).toEqual<ExplicitObj[]>([entry3Node]);
   });
 
   it("toString() creates a string representation", () => {
@@ -327,13 +351,17 @@ describe("treemap.ts", () => {
     );
   });
 
-  it.skip("print() outputs a string representation to the console", () => {
-    // expect(tmap.print()).toEqual<string>(tmap.toString());
-  });
-
-  it.skip("pprint() outputs a pretty tree representation of tree to console", () => {
-    // expect(tmap.pprint()).toEqual<string>([
-    //
-    // ].join("\n"));
+  it("print() outputs a string representation to the console", () => {
+    let stdout = "";
+    let stderr = "";
+    jest.spyOn(console, "log").mockImplementation((message: unknown) => {
+      stdout += message;
+    });
+    jest.spyOn(console, "error").mockImplementation((message: unknown) => {
+      stderr += message;
+    });
+    tmap.print();
+    expect(stdout).toEqual<string>(tmap.toString());
+    expect(stderr).toBeFalsy();
   });
 });
