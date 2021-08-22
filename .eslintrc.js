@@ -24,7 +24,6 @@ module.exports = {
     "!.*"
   ],
   rules: {
-    "no-console": "off",
     // webpack handles all dependencies to generate remaining bundle
     "import/no-extraneous-dependencies": "off"
   },
@@ -50,7 +49,6 @@ module.exports = {
         "plugin:prettier/recommended"
       ],
       rules: {
-        "no-console": "off",
         // webpack handles all dependencies to generate remaining bundle
         "import/no-extraneous-dependencies": "off",
         "no-plusplus": "off",
