@@ -1,6 +1,7 @@
 const isProduction = process.env.NODE_ENV === "production";
 const path = require("path");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const nodeExternals = require("webpack-node-externals");
 const thisModule = require("./package.json");
 
 function buildConfig(env) {
@@ -35,13 +36,14 @@ function buildConfig(env) {
     },
     optimization: {
       // minimize & mangle the output files (TerserPlugin w/ webpack@v5)
-      minimize: env.mode === "production",
+      minimize: isProduction,
       // determine which exports are used by modules and removed unused ones
       usedExports: true
     },
     resolve: {
       extensions: [".ts", ".js", ".json"]
     },
+    externals: [nodeExternals()], // ignore all modules in node_modules folder (ie. do not bundle runtime dependencies)
     externalsPresets: {
       node: true // ignore node built-in modules like path, fs, etc.
     }
