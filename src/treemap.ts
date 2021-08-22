@@ -73,10 +73,8 @@ class LeafNode<K, T> {
 }
 
 export class StopSearchException extends Error {
-  // name = "TreeMap.StopSearchException";
-
-  constructor(message: string) {
-    super(message);
+  constructor(message?: string) {
+    super(message || StopSearchException.name);
     if ("captureStackTrace" in Error) {
       Error.captureStackTrace(this, StopSearchException);
     } else {
@@ -270,12 +268,11 @@ export class TreeMap<K, T> {
   add(this: TreeMap<K, T>, key: K, value: T): TreeMap<K, T> {
     const newNode = new LeafNode<K, T>(key, value);
     TreeMap.insert(this, newNode, false);
-    // console.log(tmap.bfsKeys());
     return this;
   }
 
-  merge(this: TreeMap<K, T>, tree: TreeMap<K, T>): TreeMap<K, T> | false {
-    return Object.getPrototypeOf(tree) === TreeMap.prototype
+  merge(tree: TreeMap<K, T>): TreeMap<K, T> | false {
+    return Object.getPrototypeOf(tree) === Object.getPrototypeOf(this)
       ? TreeMap.insertSubtree(this, tree)
       : false;
   }
@@ -330,7 +327,6 @@ export class TreeMap<K, T> {
   }
 
   dfTraversal<R>(
-    this: TreeMap<K, T>,
     nodeHandlerFn: (
       this: TreeMap<K, T>,
       head: LeafNode<K, T>,
@@ -342,22 +338,22 @@ export class TreeMap<K, T> {
       return visited;
     }
 
-    function depthFirstDig(this: TreeMap<K, T>, head: LeafNode<K, T>): void {
+    function depthFirstDig(tree: TreeMap<K, T>, head: LeafNode<K, T>): void {
       if (head.left == null && head.right == null) {
-        nodeHandlerFn.call(this, head, visited);
+        nodeHandlerFn.call(tree, head, visited);
       } else {
         if (head.left != null) {
-          depthFirstDig.call(this, head.left);
+          depthFirstDig(tree, head.left);
         }
-        nodeHandlerFn.call(this, head, visited);
+        nodeHandlerFn.call(tree, head, visited);
         if (head.right != null) {
-          depthFirstDig.call(this, head.right);
+          depthFirstDig(tree, head.right);
         }
       }
     }
 
     try {
-      depthFirstDig.call(this, this.root);
+      depthFirstDig(this, this.root);
     } catch (err) {
       if (!(err instanceof StopSearchException)) throw err;
     }
@@ -365,7 +361,6 @@ export class TreeMap<K, T> {
   }
 
   bfTraversal<R>(
-    this: TreeMap<K, T>,
     nodeHandlerFn: (
       this: TreeMap<K, T>,
       currentNode: LeafNode<K, T>,
@@ -379,7 +374,7 @@ export class TreeMap<K, T> {
     }
 
     function breadthFirstDig(
-      this: TreeMap<K, T>,
+      tree: TreeMap<K, T>,
       head: LeafNode<K, T>,
       depth?: number
     ): void {
@@ -388,23 +383,23 @@ export class TreeMap<K, T> {
         // Breath-First-Search starts with depth = 0
         let startDepth = 0;
         while (startDepth <= head.height) {
-          breadthFirstDig.call(this, head, startDepth++);
+          breadthFirstDig(tree, head, startDepth++);
         }
       } else if (depth === 0) {
         // depth = 0
-        nodeHandlerFn.call(this, head, visited, depth);
+        nodeHandlerFn.call(tree, head, visited, depth);
       } else {
         if (head.left != null) {
-          breadthFirstDig.call(this, head.left, depth - 1);
+          breadthFirstDig(tree, head.left, depth - 1);
         }
         if (head.right != null) {
-          breadthFirstDig.call(this, head.right, depth - 1);
+          breadthFirstDig(tree, head.right, depth - 1);
         }
       }
     }
 
     try {
-      breadthFirstDig.call(this, this.root);
+      breadthFirstDig(this, this.root);
     } catch (err) {
       if (!(err instanceof StopSearchException)) throw err;
     }
@@ -485,8 +480,6 @@ export class TreeMap<K, T> {
     const oldHead = descendingNode;
     const parentNode = oldHead.parent; // Capture original parent
 
-    // console.log(`Node[${oldHead.key}].Rotate()`);
-
     // 1. Capture newHead as a subtree
     const newHeadTree = tree.sliceTree(risingNode);
     // 2. Disconnect newHead from oldHead node after determining which side is the newHead
@@ -498,12 +491,6 @@ export class TreeMap<K, T> {
     }
     // 3. Create subtree for what is remaining of oldHead's descendants
     const oldHeadSubtree = tree.sliceTree(oldHead);
-    // console.log(
-    //   [
-    //     `[newHeadTree] bfsKeys = ${newHeadTree.bfsKeys().toString()}`,
-    //     `[oldHeadSubtree] bfsKeys = ${oldHeadSubtree.bfsKeys().toString()}`
-    //   ].join("\n")
-    // );
     if (!skipBalance) {
       // 3.5 Rebalance oldHead's partial tree since it just lost its right side
       TreeMap.balanceTree(oldHeadSubtree);
@@ -513,9 +500,6 @@ export class TreeMap<K, T> {
     TreeMap.insert(newHeadTree, oldHeadSubtree.root!, skipBalance); // eslint-disable-line @typescript-eslint/no-non-null-assertion
     // 5. set newCompleteSubtree.root's parent as oldHead's parent
     const newHeadNode = newHeadTree.root!.setParent(parentNode); // eslint-disable-line @typescript-eslint/no-non-null-assertion
-    // console.log(
-    //   `[combinedHeadTree] bfsKeys = ${newHeadTree.bfsKeys().toString()}`
-    // );
     // 6. Glue newHead & its subtree into complete tree
     if (parentNode !== null) {
       // previous Head was not root (which means newHead is not the new root)
@@ -569,16 +553,13 @@ export class TreeMap<K, T> {
     targetTree: TreeMap<K, T>,
     srcTree: TreeMap<K, T>
   ): TreeMap<K, T> {
-    const KEY = 0;
-    const DATA = 1;
-    const breadthFirstEntries = srcTree.bfsEntries();
-    for (let k = 0; k < breadthFirstEntries.length; k++) {
+    srcTree.bfTraversal((currentNode) => {
       const detachedLeaf = new LeafNode<K, T>(
-        breadthFirstEntries[k][KEY],
-        breadthFirstEntries[k][DATA]
+        currentNode.key,
+        currentNode.data
       );
       TreeMap.insert(targetTree, detachedLeaf, false);
-    }
+    });
     return targetTree;
   }
 
@@ -597,7 +578,7 @@ export class TreeMap<K, T> {
   ): -1 | 0 | 1 {
     /* eslint-disable no-nested-ternary */
     // REASON: Simple 3 result compare of less than, equal or greater indicated by -1 | 0 | 1
-    if (!Number.isNaN(node1.key)) {
+    if (!(Number.isNaN(node1.key) || Number.isNaN(node2.key))) {
       return node1.key > node2.key ? -1 : node1.key < node2.key ? 1 : 0;
     }
     if (typeof node1.key === "string" || node1.key instanceof String) {
@@ -624,21 +605,10 @@ export class TreeMap<K, T> {
     if (!this.root) {
       return "TreeMap:{ root: NULL }";
     }
-    let str = "";
-    const KEY = 0;
-    const DATA = 1;
-    const entries = this.allEntries();
-    entries.forEach(
-      (
-        entry: [K & { toString: () => string }, T & { toString: () => string }],
-        index: number
-      ) => {
-        str += `${index === 0 ? "" : ", "}`;
-        str += `${entry[KEY].toString()}='${entry[DATA].toString()}'`;
-      }
-    );
-
-    return `TreeMap:{ root: [${this.root.toString()}], df:[${str}] }`;
+    const dfsString = this.dfTraversal<string>((currentNode, captureArray) => {
+      captureArray.push(currentNode.toString());
+    }).join(", ");
+    return `TreeMap:{ root: [${this.root.toString()}], df:[${dfsString}] }`;
   }
 
   print(this: TreeMap<K, T>): void {
