@@ -8,14 +8,16 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)._
 
 <!--lint disable no-duplicate-headings-->
 
----
-
-## \[Unreleased]
-
-- Initial creation of project & base implementation
-
+<!-- --- -->
+<!-- ## \[Unreleased] -->
 <!-- ### Added -->
 <!-- ### Changed -->
 <!-- ### Removed -->
 <!-- ### Fixed -->
 <!-- ### Security -->
+
+---
+
+## \[v1.0.0] - _2021-08-24_
+
+- Initial creation of project & base implementation
