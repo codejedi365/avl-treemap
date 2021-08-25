@@ -1,5 +1,5 @@
 {
-  "name": "treemap",
+  "name": "treemap-js",
   "version": "1.0.2",
   "description": "",
   "main": "dist/treemap.min.js",
@@ -19,27 +19,32 @@
     "prepublishOnly": "run-s build test:*",
     "unit-test-watch": "npm run --silent test:unit -- --runInBand --watch"
   },
-  "homepage": "https://github.com/codejedi365/treemap",
+  "homepage": "https://github.com/codejedi365/treemap-js",
   "author": "codejedi365 <codejedi365@gmail.com> (https://github.com/codejedi365)",
   "keywords": [
+    "AVL",
     "binary",
+    "BST",
     "codejedi365",
     "data",
+    "hierarchy",
     "map",
+    "search",
     "sort",
     "structure",
     "treemap",
-    "tree"
+    "tree",
+    "typescript"
   ],
   "engines": {
     "node": ">=10"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codejedi365/treemap.git"
+    "url": "git+https://github.com/codejedi365/treemap-js.git"
   },
   "bugs": {
-    "url": "https://github.com/codejedi365/treemap/issues"
+    "url": "https://github.com/codejedi365/treemap-js/issues"
   },
   "license": "MIT",
   "devDependencies": {
