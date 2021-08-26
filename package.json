@@ -2,6 +2,26 @@
   "name": "treemap",
   "version": "1.0.2",
   "description": "",
+  "keywords": [
+    "binary",
+    "codejedi365",
+    "data",
+    "map",
+    "sort",
+    "structure",
+    "treemap",
+    "tree"
+  ],
+  "homepage": "https://github.com/codejedi365/treemap",
+  "bugs": {
+    "url": "https://github.com/codejedi365/treemap/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codejedi365/treemap.git"
+  },
+  "license": "MIT",
+  "author": "codejedi365 <codejedi365@gmail.com> (https://github.com/codejedi365)",
   "main": "dist/treemap.min.js",
   "types": "dist/treemap.d.ts",
   "files": [
@@ -19,29 +39,6 @@
     "prepublishOnly": "run-s build test:*",
     "unit-test-watch": "npm run --silent test:unit -- --runInBand --watch"
   },
-  "homepage": "https://github.com/codejedi365/treemap",
-  "author": "codejedi365 <codejedi365@gmail.com> (https://github.com/codejedi365)",
-  "keywords": [
-    "binary",
-    "codejedi365",
-    "data",
-    "map",
-    "sort",
-    "structure",
-    "treemap",
-    "tree"
-  ],
-  "engines": {
-    "node": ">=10"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codejedi365/treemap.git"
-  },
-  "bugs": {
-    "url": "https://github.com/codejedi365/treemap/issues"
-  },
-  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
@@ -75,5 +72,8 @@
     "webpack": "^5.50.0",
     "webpack-cli": "^4.7.2",
     "webpack-node-externals": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=10"
   }
 }
