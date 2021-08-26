@@ -10,19 +10,19 @@ everyone time!
 
 ## Development Environment
 
--   Use `nvm` for node version management (see `.nvmrc` for version requirement)
--   Use latest npm version via `nvm install-latest-npm`
+- Use `nvm` for node version management (see `.nvmrc` for version requirement)
+- Use latest npm version via `nvm install-latest-npm`
 
 ## Guidelines
 
--   Code (including Markdown) must pass a linting checks
--   Developmental repository must be compatible with NodeJS v12 LTS & `npm@^7.0.0`
--   Distribution build must be compatible with v10
--   Must have successful build & pass all test cases in both Node.js v10 LTS, v12
-    LTS, & v14 LTS
--   Releases will have all non-breaking changes in dependencies up-to-date
--   New features & bugs should include a Test Driven Development (TDD) test case
-    that replicates the issue or tests the new feature
+- Code (including Markdown) must pass a linting checks
+- Developmental repository must be compatible with NodeJS v12 LTS & `npm@^7.0.0`
+- Distribution build must be compatible with v10
+- Must have successful build & pass all test cases in both Node.js v10 LTS, v12
+  LTS, & v14 LTS
+- New features & bugs should include a Test Driven Development (TDD) test case
+  that replicates the issue or tests the new feature
+- Releases will have all non-breaking changes in dependencies up-to-date
 
 ## Testing
 

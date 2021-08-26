@@ -5,6 +5,10 @@
     "preset-lint-markdown-style-guide",
     "lint-no-dead-urls",
     "lint-alphabetize-lists",
+    [
+      "remark-lint-no-file-name-irregular-characters",
+      false
+    ],
     "preset-prettier"
   ]
 }
