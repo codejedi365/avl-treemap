@@ -2,7 +2,7 @@
  * ----------------------------------------------------------------------------
  * TreeMap Utility
  * AVL Tree Balancing + KeyValMapping as Tree.fetch(key) returns tNode.data
- * codejedi365 | MIT License | 22 Aug 2021
+ * codejedi365 | MIT License | 26 Aug 2021
  * ----------------------------------------------------------------------------
  */
 
@@ -29,18 +29,22 @@ class LeafNode<K, T> {
    * Key value of generic type K
    */
   key: K;
+
   /**
    * Reference to stored data structure of generic type T
    */
   data: T;
+
   /**
    * Reference to parent node if exists, otherwise `NULL`
    */
   parent: LeafNode<K, T> | null;
+
   /**
    * Reference to left side descendent if exists, otherwise `NULL`
    */
   left: LeafNode<K, T> | null;
+
   /**
    * Reference to right side descendent if exists, otherwise `NULL`
    */
@@ -82,7 +86,7 @@ class LeafNode<K, T> {
   /**
    * Calculated attribute for the maximum number of known descendents of a LeafNode.
    * Value is based on the side with `maximum(number of descendents) + 1`.
-   * Value ranges from `0-N` where `0` is when the LeafNode has 0 descendents 
+   * Value ranges from `0-N` where `0` is when the LeafNode has 0 descendents
    */
   get height(): number {
     if (this.left === null && this.right === null) {
@@ -166,20 +170,20 @@ export class StopSearchException extends Error {
  * sorting power of an AVL Tree. An AVL Tree is a derivative of the Binary
  * Search Tree (BST) which self-balances its subtrees to achieve reliable
  * *O(log n)* on the core lookup, insertion, & deletion functions.
- * 
+ *
  * At any one time, the heights of the two child subtrees of any node differ by
  * at most 1 due to rebalancing that occurs upon insertion & deletion when the
  * tree becomes unbalanced. The AVL data structure was designed and named after
  * the inventors Georgy Adelson-Velsky & Evgenii Landis.
- * 
+ *
  * This `TreeMap` class uses the object `compare()` method to sort the LeafNode
  * keys upon insertion. The associated value in the key-value pair is stored in
  * the same node as its key via `add(key, value)` function.
- * 
+ *
  * The TreeMap is implemented to support generic types provided at the `new`
  * construction of the TreeMap object. See the `constructor()` function for
  * examples.
- * 
+ *
  * The class provides default a `compare()` function to sort keys of either
  * `typeof number` or `typeof string`.  See the `compare()` function for further
  * explanation. You must override this function to specify a different ordering
@@ -187,7 +191,7 @@ export class StopSearchException extends Error {
  * effect how nodes are searched and ordered when extracted from the data
  * structure. For the best performance, using a key with `typeof number` is the
  * fastest, then `typeof string`, and lastly a custom object comparator.  With
- * this in mind, if you are attempting to sort lots of objects, you should 
+ * this in mind, if you are attempting to sort lots of objects, you should
  * extract/derive an unique numeric `id` or string `UUID` as the key to the
  * `key=>value` pair that you insert into the tree where your value is the
  * object you are attempting to sort and store.
@@ -199,6 +203,7 @@ export class TreeMap<K, T> {
    * is the relative center of the data if tree is fully balanced.
    */
   private root: LeafNode<K, T> | null;
+
   /**
    * Enum to specify which search algorithm to use by default
    */
@@ -206,9 +211,9 @@ export class TreeMap<K, T> {
 
   /**
    * `TreeMap` Object Constructor
-   * 
+   *
    * `[DEFAULT]` Search Algorithm = Depth-First Search (DFS)
-   * 
+   *
    * Example use:
    * ```ts
    *    // 1. Explicit type mapping
@@ -255,7 +260,7 @@ export class TreeMap<K, T> {
   }
 
   /**
-   * `Function` to find the value with the last key in the dataset 
+   * `Function` to find the value with the last key in the dataset
    * determined by the depth-first search algorithm
    * @returns the value
    */
@@ -515,7 +520,7 @@ export class TreeMap<K, T> {
 
   /**
    * `Function` to merge 2 TreeMaps into 1.
-   * 
+   *
    * WARNING: Node keys in the provided tree that match keys in this tree will
    * be overwritten with the data in the provided tree.
    * @param tree the tree of nodes to merge into this tree
@@ -588,15 +593,15 @@ export class TreeMap<K, T> {
   /**
    * `Function` to perform a Depth-First traversal across the TreeMap and perform
    * a custom programable operation as each node is visited.
-   * 
+   *
    * To interrupt and return from the DFS with the data collected, the `nodeHanlderFn`
    * can throw a `StopSearchException` which will be caught by this function and the
    * persistent array of collected data returned.
-   * 
+   *
    * For Typescript, the generic type R should be provided to define the type of the
    * objects that exist in the array that will be returned from this function. It is
    * guaranteed to be an array by this function definition.
-   * 
+   *
    * @param nodeHandlerFn custom function to call on each node.  It is passed the
    *                      current node and the persistent array that can store data
    *                      across each traversal of a node.
@@ -639,15 +644,15 @@ export class TreeMap<K, T> {
   /**
    * `Function` to perform a Breadth-First traversal across the TreeMap and perform
    * a custom programable operation as each node is visited.
-   * 
+   *
    * To interrupt and return from the BFS with the data collected, the `nodeHanlderFn`
    * can throw a `StopSearchException` which will be caught by this function and the
    * persistent array of collected data returned.
-   * 
+   *
    * For Typescript, the generic type R should be provided to define the type of the
    * objects that exist in the array that will be returned from this function. It is
    * guaranteed to be an array by this function definition.
-   * 
+   *
    * @param nodeHandlerFn custom function to call on each node.  It is passed the
    *                      current node and the persistent array that can store data
    *                      across each traversal of a node.
@@ -701,13 +706,13 @@ export class TreeMap<K, T> {
 
   /**
    * `[INTERNAL]` `Function` to take a defined node and return it as its own subtree.
-   * 
+   *
    * **WARNING: It does not perform any action on the current tree context so this
    * returned object will not reference the previous tree but the previous tree
    * will have a reference to the root node of this tree.**
-   * 
+   *
    * See `TreeMap.nakedClone()` for additional details
-   * 
+   *
    * @param start a LeafNode that will be the new root node
    * @returns newly cloned TreeMap with start as the root node
    */
@@ -721,7 +726,7 @@ export class TreeMap<K, T> {
    * of the tree. The new TreeMap will have a root node of the node found from the provided
    * and all of its descendants. It will also duplicate the original configuration of the
    * parent tree.  See `sliceTree()` for details.
-   * 
+   *
    * **WARNING: This is a shallow copy of the descendents, it is up to the
    * user to remove the reference in the parent tree to this subtree.**
    * @param start a key that matches a LeafNode within the current tree
@@ -815,10 +820,10 @@ export class TreeMap<K, T> {
    * This is the primary feature of a self-balancing AVL tree which it disconnects
    * and rearranges the node references to rebuild the most efficient node structure
    * for traversal, insertion, & removal.
-   * 
+   *
    * Primarily `rotateLeft()` & `rotateRight()` are the higher level functions that
    * rely on this function and these should be called instead of this one.
-   * 
+   *
    * @param tree the TreeMap instance to which perform the rotation on
    * @param descendingNode the LeafNode to which to demote to a lower descendent
    * @param risingNode the LeafNode to which to promote to the higher ancestor
@@ -919,10 +924,10 @@ export class TreeMap<K, T> {
    * insert the nodes smartly into the `targetTree`.  The Nodes themselves are
    * deeply copied but the key and data fields will still be referencing the
    * same object.
-   * 
+   *
    * If the srcTree has a key that matches an existing key in the targetTree,
    * the targetTree's data for that key's node will be overwritten.
-   * 
+   *
    * @param targetTree the destination TreeMap instance
    * @param srcTree the TreeMap instance in which to pull key/value's from
    * @returns the original targetTree instance with the nodes of the source included
@@ -947,14 +952,14 @@ export class TreeMap<K, T> {
    * to use the default ascending numberic sorting or ascending ASCII string
    * sort (`0,1,2,...n` || `a,b,c,...z`).  Keys that are strings of numberic
    * values will be converted to numbers for comparison if they are both numeric.
-   * 
+   *
    * If not overridden, this function passes the nodes off to the generic static
    * comparison function of the TreeMap class to perform the default action
-   * 
+   *
    * If this function is overridden, it must return -1 || 0 || 1 to indicate to
    * the tree sorting algorithm whether to replace the current node, or which side
    * should it continue to traverse (-1 = left, 1 = right).
-   * 
+   *
    * @param node1 base node in which to determine current position in tree
    * @param node2 node being evaluated for if it should be in front(left) or
    *              behind(right) the base node
@@ -973,7 +978,7 @@ export class TreeMap<K, T> {
   /**
    * `[INTERNAL]` `Function` to provide the default comparison function for the
    * most used key types and most desired human format "ascending".
-   * 
+   *
    * Supports key types of string or number by default.
    * @param node1 base node in which to determine current position in tree
    * @param node2 node being evaluated for if it should be in front(left) or

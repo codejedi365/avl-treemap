@@ -6,15 +6,11 @@ module.exports = {
     node: true
   },
   extends: [
-    // JS, MD, MDX
+    // JS
     "eslint:recommended",
     "airbnb-base",
-    "plugin:mdx/recommended",
     "plugin:prettier/recommended"
   ],
-  settings: {
-    "mdx/code-blocks": true
-  },
   ignorePatterns: [
     "**/node_modules",
     "dist/**",
@@ -60,6 +56,13 @@ module.exports = {
       files: ["**.test.ts"],
       env: {
         jest: true
+      }
+    },
+    {
+      files: ["*.md", "*.mdx"],
+      extends: ["plugin:mdx/recommended"],
+      settings: {
+        "mdx/code-blocks": true
       }
     }
   ]
