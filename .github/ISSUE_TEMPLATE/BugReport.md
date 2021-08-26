@@ -12,9 +12,11 @@ the harder it is for us to resolve your problem.
 # Bug Report
 
 ## Describe the bug/issue
+
 <!--A clear and concise description of what the bug is. -->
 
 ## Bug Reproduction
+
 <!--
 Steps to reproduce the behavior:
 
@@ -25,13 +27,16 @@ Steps to reproduce the behavior:
 -->
 
 ## Expected behavior
+
 <!-- A clear and concise description of what you expected to happen. -->
 
 ## Actual Behavior
+
 <!-- A clear and concise description of what actually happens
 Include logs, screenshots and relevant details -->
 
-## Context (please complete the following information):**
+## Context
+
 <!-- A description of what were you trying to do and why -->
 
 ### Your Environment
@@ -42,7 +47,9 @@ Include logs, screenshots and relevant details -->
 - Packages: <!-- Associated packages relevant to bug or environment -->
 - Env: <!-- Node version, npm/yarn version, browser version -->
 - Example URL: <!-- Any Links that can be relevant to paint your situation -->
-- Other libraries you are using: <!-- Relevant libraries that could cause a conflict or that your situation relies upon -->
+- Other libraries you are using:
+<!-- Relevant libraries that could cause a conflict or that your situation relies upon -->
 
 ### Additional context
+
 <!-- Add any other context about the problem here. -->

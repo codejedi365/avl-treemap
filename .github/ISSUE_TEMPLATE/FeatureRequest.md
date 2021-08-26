@@ -10,19 +10,24 @@ Please fill in as much of the template below as you’re able.
 
 # Feature Request
 
-### Subject of the feature
+## Subject of the feature
+
 <!-- Briefly describe your idea for a feature here. -->
 
-### Problem || Goal
+## Problem || Goal
+
 <!-- If the feature requests relates to a problem, please describe the problem you are trying to solve here. Ex. I'm always frustrated when [...] -->
 
 <!-- If you have a desired goal in mind that a feature can help you achieve, please describe that here in detail -->
 
-### Expected behavior
+## Expected behavior
+
 <!-- What should happen?  Please describe the desired behavior. Be sure to include the solution that you would like. -->
 
-### Alternatives
+## Alternatives
+
 <!-- What are the alternative solutions?  Please provide a clear and concise description of what other solutions or features you have considered. -->
 
-### Additional context**
+## Additional context
+
 <!-- Add any other context or screenshots about the feature request here. -->
