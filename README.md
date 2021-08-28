@@ -74,7 +74,7 @@ import { TreeMap } from "treemap"; // es6 import example
 const treemap = new TreeMap(); // JavaScript
 ```
 
-```js
+```ts
 // TypeScript generic construction
 const treemap = new TreeMap<string, unknown>();
 ```
@@ -91,7 +91,7 @@ Change the default behavior of `keys()`, `values()`, `allEntries()` to a desired
 search algorithm via provided `Treemap.defaultAlgorithm` attribute. **DEFAULT:
 Depth-First Search (DFS)**
 
-```js
+```ts
 import { TreeMap, TreeAlgorithm } from "treemap";
 
 const treemap = new TreeMap(); // Algorithm is DFS [DEFAULT]
@@ -104,6 +104,8 @@ treemap.defaultAlgorithm = TreeAlgorithm.BFS;
 <summary size="2">API</summary>
 
 ## API
+
+<!-- lint disable no-emphasis-as-heading -->
 
 ### `ENUM TreeAlgorithm`
 
@@ -128,9 +130,9 @@ Creates a new `TreeMap` object with 0 nodes. Initializes with DFS as the
 
 Example use:
 
-```js
+```ts
 // 1. Explicit type mapping
-const numbertree = new TreeMap<number, object>();
+const numbertree = new TreeMap<number, unknown>();
 
 // 2. Dynamic type mapping
 const key: string = "alphanumeric";
@@ -354,7 +356,7 @@ no effect or use.
 
 Examples:
 
-```js
+```ts
 // 1. No message (default returns Exception name)
 throw new StopSearchException();
 
@@ -362,13 +364,14 @@ throw new StopSearchException();
 throw new StopSearchException("Custom Message");
 ```
 
+<!-- lint enable no-emphasis-as-heading -->
 </details>
 
 ## Vulnerability Report
 
-| Vulnerability |       PKG        | Category |     In Production Pkg?      | Notes                                                                  |
-| ------------- | :--------------: | :------: | :-------------------------: | ---------------------------------------------------------------------- |
-| RegExp DoS    | trim\\@&lt;0.0.3 |   High   | No _(DevDependency/Linter)_ | waiting for remark-parse\\@^9.x.x release, owner will not patch v8.0.3 |
+| Vulnerability |      PKG      | Category |     In Production Pkg?      | Notes                                                               |
+| ------------- | :-----------: | :------: | :-------------------------: | ------------------------------------------------------------------- |
+| RegExp DoS    | `trim@<0.0.3` |   High   | No _(DevDependency/Linter)_ | waiting for `remark-parse@9` release, owner will not patch `v8.0.3` |
 
 ## Contributors
 
