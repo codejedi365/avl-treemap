@@ -9,6 +9,7 @@ module.exports = {
     // JS
     "eslint:recommended",
     "airbnb-base",
+    "plugin:import/recommended",
     "plugin:prettier/recommended"
   ],
   ignorePatterns: [
@@ -30,18 +31,22 @@ module.exports = {
     },
     {
       files: ["*.ts"],
+      excludedFiles: ["*.m{d,dx}/*.ts"],
       parser: "@typescript-eslint/parser",
       parserOptions: {
         ecmaVersion: 8,
         project: "tsconfig.json"
       },
-      plugins: ["@typescript-eslint"],
+      plugins: ["@typescript-eslint", "jest", "import"],
       extends: [
         "eslint:recommended",
         "airbnb-typescript/base",
-        "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:jest/recommended",
+        "plugin:jest/style",
         "plugin:prettier/recommended"
       ],
       rules: {
@@ -55,7 +60,7 @@ module.exports = {
     {
       files: ["**.test.ts"],
       env: {
-        jest: true
+        "jest/globals": true
       }
     },
     {
