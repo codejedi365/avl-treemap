@@ -1,3 +1,18 @@
+const acceptableCodePractices = {
+  // Core acceptable code practices
+  "no-plusplus": "off",
+  yoda: "off"
+};
+
+const invalidCodeBlockRules = {
+  // Invalid rules for embedded code-blocks
+  "import/no-unresolved": "off",
+  "no-undef": "off",
+  "no-unused-expressions": "off",
+  "no-unused-vars": "off",
+  "no-unreachable": "off"
+};
+
 module.exports = {
   root: true,
   env: {
@@ -52,9 +67,8 @@ module.exports = {
       rules: {
         // webpack handles all dependencies to generate remaining bundle
         "import/no-extraneous-dependencies": "off",
-        "no-plusplus": "off",
         "no-nested-ternary": "warn",
-        yoda: "off"
+        ...acceptableCodePractices
       }
     },
     {
@@ -68,6 +82,39 @@ module.exports = {
       extends: ["plugin:mdx/recommended"],
       settings: {
         "mdx/code-blocks": true
+      }
+    },
+    {
+      // Markdown JS code-blocks (virtual filepath)
+      files: ["**/*.md/*.{js,jsx}"],
+      rules: {
+        ...invalidCodeBlockRules
+      }
+    },
+    {
+      // Markdown TS code-blocks (virtual filepath)
+      files: ["**/*.md/*.{ts,tsx}"],
+      parser: "@typescript-eslint/parser",
+      plugins: ["@typescript-eslint"],
+      extends: [
+        "eslint:recommended",
+        "airbnb-typescript/base",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+      ],
+      rules: {
+        ...acceptableCodePractices,
+        // Additional embedded code-block invalid rules
+        ...invalidCodeBlockRules,
+        "@typescript-eslint/no-unused-vars": "off",
+        // Typescript rules that require a project tsconfig.json which is not possible
+        "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/no-implied-eval": "off",
+        "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/return-await": "off",
+        // Readmes should be extra specific or generic as desired
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/ban-types": "warn"
       }
     }
   ]
