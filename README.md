@@ -1,10 +1,10 @@
-# TreeMap-js
+# AVL-TreeMap
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/avl-treemap.js">
-    <img src="https://img.shields.io/npm/v/avl-treemap.js" />
+  <a href="https://www.npmjs.com/package/avl-treemap">
+    <img src="https://img.shields.io/npm/v/avl-treemap" />
   </a>
-  <img src="https://img.shields.io/npm/l/avl-treemap.js?color=yellow">
+  <img src="https://img.shields.io/npm/l/avl-treemap?color=yellow">
   <a href="https://github.com/codejedi365/avl-treemap/blob/main/CHANGELOG.md">
     <img src="https://img.shields.io/badge/&#9741-changelog-yellow">
   </a>
@@ -15,12 +15,12 @@
     <img src="https://img.shields.io/github/issues/codejedi365/avl-treemap">
   </a>
   <img src="https://img.shields.io/badge/dependencies-0-success">
-  <img src="https://img.shields.io/snyk/vulnerabilities/npm/avl-treemap.js">
+  <img src="https://img.shields.io/snyk/vulnerabilities/npm/avl-treemap">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/npm/dependency-version/avl-treemap.js/dev/webpack">
-  <img src="https://img.shields.io/node/v-lts/avl-treemap.js?color=blue">
-  <img src="https://img.shields.io/bundlephobia/min/avl-treemap.js" />
+  <img src="https://img.shields.io/npm/dependency-version/avl-treemap/dev/webpack">
+  <img src="https://img.shields.io/node/v-lts/avl-treemap?color=blue">
+  <img src="https://img.shields.io/bundlephobia/min/avl-treemap" />
   <img src="https://img.shields.io/github/last-commit/codejedi365/avl-treemap">
 </p>
 
