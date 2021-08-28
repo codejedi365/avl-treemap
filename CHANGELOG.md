@@ -18,6 +18,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)._
 
 ---
 
+## \[v1.0.4] - _2021-08-28_
+
+- Corrected packaged README.md & homepage link
+
+---
+
 ## \[v1.0.3] - _2021-08-28_
 
 - Corrected duplicate distribution file
