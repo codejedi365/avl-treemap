@@ -1,7 +1,7 @@
 /**
  * -----------------------------------------------------
  * Unit-Tests: TreeMap.js exported functionality
- * codejedi365 | MIT License | 22 Aug 2021
+ * codejedi365 | MIT License | 28 Aug 2021
  * -----------------------------------------------------
  */
 import { TreeMap, TreeAlgorithm, StopSearchException } from "../treemap";
@@ -227,7 +227,7 @@ describe("treemap.ts", () => {
       tree.remove(entryNode.key);
       removed.push(entryNode);
     }
-    expect(entryOrder.length).toEqual(4);
+    expect(entryOrder).toHaveLength(4);
     expect(tmap.height()).toEqual<number>(
       Math.floor(Math.log2(entryOrder.length)) + 1
     );
@@ -248,7 +248,7 @@ describe("treemap.ts", () => {
       added.push(entryNode);
     }
     // Ensure test starts as expected
-    expect(entryOrder.length).toEqual(4);
+    expect(entryOrder).toHaveLength(4);
     expect(tmap.height()).toEqual<number>(
       Math.floor(Math.log2(entryOrder.length)) + 1
     );
