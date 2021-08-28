@@ -1,6 +1,6 @@
 {
   "name": "avl-treemap",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A TS/JS implemenation of a self-balancing binary tree with mapped data nodes",
   "keywords": [
     "AVL",
