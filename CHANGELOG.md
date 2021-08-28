@@ -18,6 +18,12 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)._
 
 ---
 
-## \[v1.0.0] - _2021-08-28_
+## \[v1.0.3] - _2021-08-28_
+
+- Corrected duplicate distribution file
+
+---
+
+## \[v1.0.2] - _2021-08-28_
 
 - Initial creation of project & base implementation
