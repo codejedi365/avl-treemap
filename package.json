@@ -1,7 +1,7 @@
 {
   "name": "treemap-js",
   "version": "1.0.2",
-  "description": "",
+  "description": "A TS/JS implemenation of a self-balancing binary tree with mapped data nodes",
   "keywords": [
     "AVL",
     "binary",
