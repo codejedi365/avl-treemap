@@ -1,5 +1,6 @@
 const acceptableCodePractices = {
   // Core acceptable code practices
+  "no-nested-ternary": "warn",
   "no-plusplus": "off",
   yoda: "off"
 };
@@ -7,6 +8,7 @@ const acceptableCodePractices = {
 const invalidCodeBlockRules = {
   // Invalid rules for embedded code-blocks
   "import/no-unresolved": "off",
+  "no-console": "off",
   "no-undef": "off",
   "no-unused-expressions": "off",
   "no-unused-vars": "off",
@@ -67,7 +69,6 @@ module.exports = {
       rules: {
         // webpack handles all dependencies to generate remaining bundle
         "import/no-extraneous-dependencies": "off",
-        "no-nested-ternary": "warn",
         ...acceptableCodePractices
       }
     },

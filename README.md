@@ -1,4 +1,4 @@
-# TreeMap.js
+# TreeMap-js
 
 <p align="center">
   <a href="https://www.npmjs.com/package/treemap.js">
@@ -107,6 +107,9 @@ treemap.defaultAlgorithm = TreeAlgorithm.BFS;
 
 <!-- lint disable no-emphasis-as-heading -->
 
+User examples of the API can be found in the unit test file
+[`treemap.test.ts`](https://github.com/codejedi365/treemap-js/blob/main/src/__tests__/treemap.test.ts).
+
 ### `ENUM TreeAlgorithm`
 
 Defined constanjs to define supported search algorithms for traversing a binary
@@ -143,121 +146,112 @@ const treemap = new TreeMap<typeof key, typeof data>();
 **`first(): T | false`**
 
 Finds the value of the first key in the dataset determined by the depth-first
-search algorithm @returns the value
+search algorithm
 
 **`firstKey(): K | false`**
 
 Finds the first key in the dataset determined via the depth-first search
-algorithm @returns the key
+algorithm
 
 **`last(): T | false`**
 
 Finds the value with the last key in the dataset determined by the depth-first
-search algorithm @returns the value
+search algorithm
 
 **`lastKey(): K | false`**
 
 Finds the last key in the dataset determined via the depth-first search
-algorithm @returns the key
+algorithm
 
 **`fetch(key: K): T | null`**
 
 Finds the value/data of the key=>value pair contained in the tree's nodes which
-matches the specified key @param key the key to search for @returns the data
-stored by the specified key
+matches the specified key. Function returns the data stored by the specified key
+or `NULL` if the key is not found.
 
 **`isKey(key: K): boolean`**
 
-Determines if a specified key is in the TreeMap @param key the key to search for
-@returns `True` if key exists, otherwise `False`
+Determines if a specified key is in the TreeMap. The function returns `True` if
+key exists, otherwise `False`.
 
 **`keys(): K[]`**
 
 Returns all keys in the TreeMap according to the set `defaultAlgorithm`.
-@returns an array of all keys
 
 **`dfsKeys(): K[]`**
 
 Returns all keys in the TreeMap defined by a Depth-First Search regardless of
-the value of `treemap.defaultAlgorithm`. @returns an array of all keys in DFS
-order
+the value of `treemap.defaultAlgorithm`.
 
 **`bfsKeys(): K[]`**
 
 Returns all keys in the TreeMap defined by a Breadth-First Search regardless of
-the value of `treemap.defaultAlgorithm`. @returns an array of all keys in BFS
-order
+the value of `treemap.defaultAlgorithm`.
 
 **`values(): T[]`**
 
 Returns all values in the TreeMap according to the order of keys found via the
-set `defaultAlgorithm`. @returns an array of all values
+set `defaultAlgorithm`.
 
 **`dfsValues(): T[]`**
 
 Returns all values in the TreeMap defined by a Depth-First Search of the
-associated keys regardless of the value of `treemap.defaultAlgorithm`. @returns
-an array of all values based on DFS order
+associated keys regardless of the value of `treemap.defaultAlgorithm`.
 
 **`bfsValues(): T[]`**
 
 Returns all values in the TreeMap defined by a Breadth-First Search of the
-associated keys regardless of the value of `treemap.defaultAlgorithm`. @returns
-an array of all values based on BFS order
+associated keys regardless of the value of `treemap.defaultAlgorithm`.
 
 **`allEntries(): [K, T][]`**
 
 Returns all key-value pairs as an entry `[key, value]` according to the order of
-keys found via the set `defaultAlgorithm`. @returns an array of all key-value
-pairs
+keys found via the set `defaultAlgorithm`.
 
 **`dfsEntries(): [K, T][]`**
 
 Returns all key-value pairs as an entry `[key, value]` according to the order of
 a Depth-First Search, regardless of the value of `treemap.defaultAlgorithm`.
-@returns an array of all key-value pairs based on DFS order
 
 **`bfsEntries(): [K, T][]`**
 
 Returns all key-value pairs as an entry `[key, value]` according to the order of
 a Breadth-First Search, regardless of the value of `treemap.defaultAlgorithm`.
-@returns an array of all key-value pairs based on BFS order
 
 **`size(): number`**
 
-Counts the number of nodes in the Tree @returns the number of nodes in the
-TreeMap, `0` if empty
+Counts and returns the number of nodes in the TreeMap. An empty map will return
+`0`.
 
 **`height(): number`**
 
-Counts the number of layers in the Tree @returns the number of layers in the
-TreeMap, `0` if empty
+Counts and returns the number of layers in the TreeMap. An empty map will return
+`0`.
 
 **`add(key: K, value: T): TreeMap<K, T>`**
 
-Creates and inserts a key=>value node into the TreeMap @param key the key to
-sort by @param value the data to store @returns this TreeMap instance for
-chaining
+Creates and inserts a key=>value node into the TreeMap. The function returns
+this TreeMap instance for function chaining if desired.
 
 **`merge(tree: TreeMap<K, T>): TreeMap<K, T> | false`**
 
-Merges 2 TreeMaps into 1.
-
-WARNING: Node keys in the provided tree that match keys in this tree will be
-overwritten with the data in the provided tree. @param tree the tree of nodes to
-merge into this tree @returns this adjusted TreeMap instance for chaining, or
+Merges 2 TreeMaps into 1. All nodes in the `tree` parameter are incrementally
+extracted and inserted into the current TreeMap instance. If successful, The
+function returns this adjusted TreeMap instance for function chaining, or
 `False` on failure
+
+**WARNING: Node keys in the provided tree that match keys in this tree will be
+overwritten with the data in the provided tree.**
 
 **`remove(key: K): T | false`**
 
-Removes a node and return the associated data based on a given key @param key
-the key that identifies the node @returns the data stored or false if key is not
-found
+Removes a node and returns the associated data based on a given key. Returns
+`false` if key is not found.
 
 **`removeAll(): TreeMap<K, T>`**
 
-Quickly removes all nodes & values from TreeMap @returns this empty TreeMap for
-chaining
+Quickly removes all nodes & values from TreeMap. The function returns this
+TreeMap instance for function chaining if desired.
 
 **`dfTraversal<R>(nodeHandlerFn: (this: TreeMap<K, T>, head: LeafNode<K, T>, visited: R[]) => void): R[]`**
 
@@ -272,9 +266,29 @@ For Typescript, the generic type R should be provided to define the type of the
 objects that exist in the array that will be returned from this function. It is
 guaranteed to be an array by this function definition.
 
-@param nodeHandlerFn custom function to call on each node. It is passed the
-current node and the persistent array that can store data across each traversal
-of a node. @returns an array of custom objects user defined
+The nodeHandlerFn will be called when each node is visited. It is passed the
+current node and the persistent array that can store data between each function
+call each. The persistent array `visited` is returned after the last node is
+visited or when a StopSearchException has been thrown.
+
+```ts
+const treemap = new TreeMap<number, string>();
+[
+  [1, "one"],
+  [2, "two"],
+  [3, "three"]
+].forEach(([key, data]) => {
+  customTMap.add(key, data);
+});
+
+// Extract data from only odd keys via DFS
+const result = treemap.dfTraversal<string>((node, captureArray) => {
+  if (node.key % 2 === 1) {
+    captureArray.push(node.data);
+  }
+});
+console.log(result); // [ "one", "three" ]
+```
 
 **`bfTraversal<R>(nodeHandlerFn: (this: TreeMap<K, T>, currentNode: LeafNode<K, T>, visited: R[], depth: number) => void): R[]`**
 
@@ -289,9 +303,30 @@ For Typescript, the generic type R should be provided to define the type of the
 objects that exist in the array that will be returned from this function. It is
 guaranteed to be an array by this function definition.
 
-@param nodeHandlerFn custom function to call on each node. It is passed the
-current node and the persistent array that can store data across each traversal
-of a node. @returns an array of custom objects user defined
+The nodeHandlerFn will be called when each node is visited. It is passed the
+current node and the persistent array that can store data between each function
+call each. The persistent array `visited` is returned after the last node is
+visited or when a StopSearchException has been thrown.
+
+```ts
+const treemap = new TreeMap<number, string>();
+[
+  [3, "three"],
+  [1, "one"],
+  [2, "two"],
+  [4, "four"]
+].forEach(([key, data]) => {
+  customTMap.add(key, data);
+});
+
+// Extract data from only even keys via BFS
+const result = treemap.bfTraversal<string>((node, captureArray) => {
+  if (node.key % 2 === 0) {
+    captureArray.push(node.data);
+  }
+});
+console.log(result); // [ "four", "two" ]
+```
 
 **`subtree(start: K): TreeMap<K, T> | false`**
 
@@ -301,9 +336,9 @@ and all of its descendants. It will also duplicate the original configuration of
 the parent tree. See `sliceTree()` for details.
 
 **WARNING: This is a shallow copy of the descendents, it is up to the user to
-remove the reference in the parent tree to this subtree.** @param start a key
-that matches a LeafNode within the current tree @returns a new TreeMap instance
-from a portion of the current tree or `False` if key was not found.
+remove the reference in the parent tree to this subtree.**
+
+The function returns `False` if the key provided was not found.
 
 **`compare(this: void, node1: LeafNode<K, T>, node2: LeafNode<K, T | null>): -1 | 0 | 1`**
 
@@ -316,24 +351,49 @@ numbers for comparison if they are both numeric.
 If not overridden, this function passes the nodes off to the generic static
 comparison function of the TreeMap class to perform the default action
 
-If this function is overridden, it must return -1 || 0 || 1 to indicate to the
+If this function is overridden, it must return `-1 || 0 || 1` to indicate to the
 tree sorting algorithm whether to replace the current node, or which side should
 it continue to traverse (-1 = left, 1 = right).
 
-@param node1 base node in which to determine current position in tree @param
-node2 node being evaluated for if it should be in front(left) or behind(right)
-the base node @returns `-1` if node2 should be in to the left of node1, `+1` if
-on the right, or `0` if keys are equal
+- @param node1 base node in which to determine current position in tree
+- @param node2 node being evaluated for if it should be in front(left) or
+  behind(right) the base node
+- @returns `-1` if node2 should be in to the left of node1, `+1` if on the
+  right, or `0` if keys are equal
+
+```ts
+// Example
+const customTMap = new TreeMap<number, string>();
+
+// Custom compare function (Descending Order)
+customTMap.compare = function descOrder(node1, node2) {
+  return node1.key > node2.key ? 1 : node1.key < node2.key ? -1 : 0;
+};
+
+// Load data
+[
+  [1, "one"],
+  [2, "two"],
+  [3, "three"]
+].forEach(([key, data]) => {
+  customTMap.add(key, data);
+});
+
+console.log(customTMap.dfsKeys()); // [ 3, 2, 1 ]
+```
 
 **`toString(): string`**
 
-Converts TreeMap to human readable (serialized-like) representation @override
-`Object.toString()` @returns string in format
-`TreeMap:{ root:[key=value], dfs:[entry, ...] }`
+Converts TreeMap to human readable representation. Returns a string in the
+format:
+
+```
+"TreeMap:{ root:[key=value], dfs:[[key, data], entryN, ...] }"
+```
 
 **`print(): void`**
 
-Prints the serialized version of this TreeMap to stdout
+Prints the serialized version of this TreeMap to `console`.
 
 ### `[INTERNAL] LeafNode`
 
