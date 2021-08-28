@@ -27,8 +27,8 @@
   },
   "license": "MIT",
   "author": "codejedi365 <codejedi365@gmail.com> (https://github.com/codejedi365)",
-  "main": "dist/avl-treemap.min.js",
-  "types": "dist/avl-treemap.d.ts",
+  "main": "dist/treemap.min.js",
+  "types": "dist/treemap.d.ts",
   "files": [
     "dist/*"
   ],
