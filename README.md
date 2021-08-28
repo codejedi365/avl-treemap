@@ -1,27 +1,27 @@
 # TreeMap-js
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/treemap.js">
-    <img src="https://img.shields.io/npm/v/treemap.js" />
+  <a href="https://www.npmjs.com/package/avl-treemap.js">
+    <img src="https://img.shields.io/npm/v/avl-treemap.js" />
   </a>
-  <img src="https://img.shields.io/npm/l/treemap.js?color=yellow">
-  <a href="https://github.com/codejedi365/treemap-js/blob/main/CHANGELOG.md">
+  <img src="https://img.shields.io/npm/l/avl-treemap.js?color=yellow">
+  <a href="https://github.com/codejedi365/avl-treemap/blob/main/CHANGELOG.md">
     <img src="https://img.shields.io/badge/&#9741-changelog-yellow">
   </a>
-  <a href="https://github.com/codejedi365/treemap-js/actions/workflows/ci.yml">
-    <img src="https://github.com/codejedi365/treemap-js/actions/workflows/ci.yml/badge.svg" >
+  <a href="https://github.com/codejedi365/avl-treemap/actions/workflows/ci.yml">
+    <img src="https://github.com/codejedi365/avl-treemap/actions/workflows/ci.yml/badge.svg" >
   </a>
-  <a href="https://github.com/codejedi365/treemap-js/issues">
-    <img src="https://img.shields.io/github/issues/codejedi365/treemap-js">
+  <a href="https://github.com/codejedi365/avl-treemap/issues">
+    <img src="https://img.shields.io/github/issues/codejedi365/avl-treemap">
   </a>
   <img src="https://img.shields.io/badge/dependencies-0-success">
-  <img src="https://img.shields.io/snyk/vulnerabilities/npm/treemap.js">
+  <img src="https://img.shields.io/snyk/vulnerabilities/npm/avl-treemap.js">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/npm/dependency-version/treemap.js/dev/webpack">
-  <img src="https://img.shields.io/node/v-lts/treemap.js?color=blue">
-  <img src="https://img.shields.io/bundlephobia/min/treemap.js" />
-  <img src="https://img.shields.io/github/last-commit/codejedi365/treemap-js">
+  <img src="https://img.shields.io/npm/dependency-version/avl-treemap.js/dev/webpack">
+  <img src="https://img.shields.io/node/v-lts/avl-treemap.js?color=blue">
+  <img src="https://img.shields.io/bundlephobia/min/avl-treemap.js" />
+  <img src="https://img.shields.io/github/last-commit/codejedi365/avl-treemap">
 </p>
 
 A TypeScript/Javascript implementation of a binary tree map.
@@ -63,13 +63,13 @@ you are attempting to sort and store.
 ### 1. Install
 
 ```sh
-npm install --save treemap
+npm install --save avl-treemap
 ```
 
 ### 2. Import & intialize
 
 ```js
-import { TreeMap } from "treemap"; // es6 import example
+import { TreeMap } from "avl-treemap"; // es6 import example
 
 const treemap = new TreeMap(); // JavaScript
 ```
@@ -92,7 +92,7 @@ search algorithm via provided `Treemap.defaultAlgorithm` attribute. **DEFAULT:
 Depth-First Search (DFS)**
 
 ```ts
-import { TreeMap, TreeAlgorithm } from "treemap";
+import { TreeMap, TreeAlgorithm } from "avl-treemap";
 
 const treemap = new TreeMap(); // Algorithm is DFS [DEFAULT]
 
@@ -108,7 +108,7 @@ treemap.defaultAlgorithm = TreeAlgorithm.BFS;
 <!-- lint disable no-emphasis-as-heading -->
 
 User examples of the API can be found in the unit test file
-[`treemap.test.ts`](https://github.com/codejedi365/treemap-js/blob/main/src/__tests__/treemap.test.ts).
+[`treemap.test.ts`](https://github.com/codejedi365/avl-treemap/blob/main/src/__tests__/treemap.test.ts).
 
 ### `ENUM TreeAlgorithm`
 
@@ -436,7 +436,7 @@ throw new StopSearchException("Custom Message");
 ## Contributors
 
 PR's & Issue contributions welcome! Please adhere to
-[contributing guidelines](https://github.com/codejedi365/treemap-js/blob/main/CONTRIBUTING.md)
+[contributing guidelines](https://github.com/codejedi365/avl-treemap/blob/main/CONTRIBUTING.md)
 or your submission will be closed.
 
 <!-- ## Future Features -->

@@ -1,5 +1,5 @@
 {
-  "name": "treemap-js",
+  "name": "avl-treemap",
   "version": "1.0.2",
   "description": "A TS/JS implemenation of a self-balancing binary tree with mapped data nodes",
   "keywords": [
@@ -17,18 +17,18 @@
     "tree",
     "typescript"
   ],
-  "homepage": "https://github.com/codejedi365/treemap-js",
+  "homepage": "https://github.com/codejedi365/avl-treemap",
   "bugs": {
-    "url": "https://github.com/codejedi365/treemap-js/issues"
+    "url": "https://github.com/codejedi365/avl-treemap/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codejedi365/treemap-js.git"
+    "url": "git+https://github.com/codejedi365/avl-treemap.git"
   },
   "license": "MIT",
   "author": "codejedi365 <codejedi365@gmail.com> (https://github.com/codejedi365)",
-  "main": "dist/treemap.min.js",
-  "types": "dist/treemap.d.ts",
+  "main": "dist/avl-treemap.min.js",
+  "types": "dist/avl-treemap.d.ts",
   "files": [
     "dist/*"
   ],
