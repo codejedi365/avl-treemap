@@ -39,7 +39,8 @@ module.exports = {
   ],
   rules: {
     // webpack handles all dependencies to generate remaining bundle
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    ...acceptableCodePractices
   },
   overrides: [
     {
