@@ -7,7 +7,6 @@ const thisModule = require("./package.json");
 function buildConfig(env) {
   return {
     entry: "./src/treemap.ts",
-    target: "node",
     output: {
       path: path.resolve(
         __dirname,
@@ -15,7 +14,12 @@ function buildConfig(env) {
           ? "dist"
           : path.dirname(thisModule.main)
       ),
-      filename: path.basename(thisModule.main)
+      filename: path.basename(thisModule.main),
+      library: {
+        type: "umd"
+      },
+      // prevent error: `Uncaught ReferenceError: self is not defined `
+      globalObject: "this"
     },
     plugins: [
       new ESLintPlugin({
