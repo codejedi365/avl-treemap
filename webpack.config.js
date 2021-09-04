@@ -16,7 +16,8 @@ function buildConfig(env) {
       ),
       filename: path.basename(thisModule.main),
       library: {
-        type: "umd"
+        type: "umd",
+        export: "default"
       },
       // prevent error: `Uncaught ReferenceError: self is not defined `
       globalObject: "this"
