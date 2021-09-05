@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <!-- All resource links (href/src) must be from the project root -->
+    <script src="../dist/treemap.min.js"></script>
+    <script>
+      window.addEventListener("load", (event) => {
+        window.treemap = new TreeMap();
+        document.getElementById("status").innerText = "SUCCESS";
+
+        treemap.add(1, "one");
+        treemap.add(2, "two");
+        
+        var detailBlock = document.getElementById("details");
+        detailBlock.innerText = treemap.size().toString();
+        detailBlock.parentElement.style.display = "block";
+      });
+    </script>
+  </head>
+  <body>
+    <h3>
+      TreeMap Load: <span id="status">FAILED</span>!
+    </h3>
+    <p style="display: none;">
+      &emsp;window.treemap.size() = <span id="details">0</span>
+    </p>
+  </body>
+</html>

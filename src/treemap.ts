@@ -2,7 +2,7 @@
  * ----------------------------------------------------------------------------
  * TreeMap Utility
  * AVL Tree Balancing + KeyValMapping as Tree.fetch(key) returns tNode.data
- * codejedi365 | MIT License | 26 Aug 2021
+ * codejedi365 | MIT License | 04 Sep 2021
  * ----------------------------------------------------------------------------
  */
 
@@ -1046,4 +1046,8 @@ export class TreeMap<K, T> {
   }
 }
 
-export default TreeMap;
+export default {
+  TreeMap,
+  TreeAlgorithm,
+  StopSearchException
+};
