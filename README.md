@@ -29,9 +29,9 @@ A TypeScript/Javascript implementation of a binary tree map.
 ## Package Objective
 
 The `TreeMap` class merges the functionality of `key=>value` pairs with the
-sorting power of an **AVL Tree**. An AVL Tree is a derivative of the **Binary Search
-Tree (BST)** which self-balances its subtrees to achieve reliable _O(log n)_ on
-the core lookup, insertion, & deletion functions.
+sorting power of an **AVL Tree**. An AVL Tree is a derivative of the **Binary
+Search Tree (BST)** which self-balances its subtrees to achieve reliable _O(log
+n)_ on the core lookup, insertion, & deletion functions.
 
 At any one time, the heights of the two child subtrees of any node differ by at
 most 1 due to rebalancing that occurs upon insertion & deletion when the tree
@@ -62,9 +62,9 @@ you are attempting to sort and store.
 (UMD module) via [`Webpack`](https://github.com/webpack/webpack)! `Webpack` is
 used to generate a minimized & mangled production bundle that is universally
 compatible according to the Universal Module Definition (UMD) standard. This
-package will work in any browser that supports **ECMAScript 2015 (ES5)** as
-well as for NodeJS. Currently, there are 0 runtime dependencies for this
-library so the bundle only includes the source code of this library.
+package will work in any browser that supports **ECMAScript 2015 (ES5)** as well
+as for NodeJS. Currently, there are 0 runtime dependencies for this library so
+the bundle only includes the source code of this library.
 
 ---
 
