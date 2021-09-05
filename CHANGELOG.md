@@ -8,12 +8,33 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)._
 
 <!--lint disable no-duplicate-headings-->
 
+<!-- ***** ENTRY TEMPLATE ******* -->
 <!-- --- -->
 <!-- ## \[Unreleased] -->
 <!-- ### Added -->
 <!-- ### Changed -->
 <!-- ### Removed -->
-<!-- ### Fixed -->
+<!-- ### Bug Fixes -->
+<!-- ### Security -->
+<!-- ***** ENTRY TEMPLATE ******* -->
+
+---
+
+## \[Unreleased]
+
+<!-- ### Added -->
+
+### Changed
+
+- _Breaking_ Default export now includes the entire set of exports, not only the
+  TreeMap class
+- _Enhancement_ Converted to a UMD module bundle to extend support to browser
+  imports (maintains `Node.js` support)
+- [README.md](./README.md): Drop non production vulnerabilities from table, add webpack
+  description, & improve readability
+
+<!-- ### Removed -->
+<!-- ### Bug Fixes -->
 <!-- ### Security -->
 
 ---

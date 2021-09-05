@@ -28,10 +28,10 @@ A TypeScript/Javascript implementation of a binary tree map.
 
 ## Package Objective
 
-The `TreeMap` class merges the functionality of key=>value pairs with the
-sorting power of an AVL Tree. An AVL Tree is a derivative of the Binary Search
-Tree (BST) which self-balances its subtrees to achieve reliable _O(log n)_ on
-the core lookup, insertion, & deletion functions.
+The `TreeMap` class merges the functionality of `key=>value` pairs with the
+sorting power of an **AVL Tree**. An AVL Tree is a derivative of the **Binary
+Search Tree (BST)** which self-balances its subtrees to achieve reliable _O(log
+n)_ on the core lookup, insertion, & deletion functions.
 
 At any one time, the heights of the two child subtrees of any node differ by at
 most 1 due to rebalancing that occurs upon insertion & deletion when the tree
@@ -58,6 +58,16 @@ extract/derive an unique numeric `id` or string `UUID` as the key to the
 `key=>value` pair that you insert into the tree where your value is the object
 you are attempting to sort and store.
 
+**Why this library?** You get a minimized and production ready implementation
+(UMD module) via [`Webpack`](https://github.com/webpack/webpack)! `Webpack` is
+used to generate a minimized & mangled production bundle that is universally
+compatible according to the Universal Module Definition (UMD) standard. This
+package will work in any browser that supports **ECMAScript 2015 (ES5)** as well
+as for NodeJS. Currently, there are 0 runtime dependencies for this library so
+the bundle only includes the source code of this library.
+
+---
+
 ## How to use
 
 ### 1. Install
@@ -68,22 +78,44 @@ npm install --save avl-treemap
 
 ### 2. Import & intialize
 
-```js
-import { TreeMap } from "avl-treemap"; // es6 import example
+#### Node
 
-const treemap = new TreeMap(); // JavaScript
+```js
+// Vanilla NodeJS - JavaScript
+const TreeMap = require("avl-treemap");
+
+const treemap = new TreeMap();
 ```
 
 ```ts
+// es6 import (Node.js >=16.x.x)
+import { TreeMap } from "avl-treemap";
+
 // TypeScript generic construction
 const treemap = new TreeMap<string, unknown>();
 ```
 
+#### Browser
+
+Include `treemap.min.js` in your HTML! The module exports can be accessed from
+the window object via `window.TreeMap`.
+
+```html
+<html>
+  <head>
+    <script src="node_modules/avl-treemap/dist/treemap.min.js"></script>
+  </head>
+  <body>
+    <!-- Your website here -->
+  </body>
+</html>
+```
+
 ### 3. Common Uses
 
-1.  Event Handling `msTimestamp => Event:{ ... }`
+1.  Event Handling `msTimestamp => Event:{ ... }` (numerical insertion sort)
 
-2.  Quick alphabetical sorting via insertion sort
+2.  Quick alphabetical sorting (alphanumeric insertion sort)
 
 ### 4. Special Config
 
@@ -100,10 +132,12 @@ const treemap = new TreeMap(); // Algorithm is DFS [DEFAULT]
 treemap.defaultAlgorithm = TreeAlgorithm.BFS;
 ```
 
-<details>
-<summary size="2">API</summary>
+---
 
-## API
+<details>
+<summary style="font-size: 2em;">API</summary>
+
+## Application Programming Interface
 
 <!-- lint disable no-emphasis-as-heading -->
 
@@ -427,11 +461,15 @@ throw new StopSearchException("Custom Message");
 <!-- lint enable no-emphasis-as-heading -->
 </details>
 
+---
+
 ## Vulnerability Report
 
-| Vulnerability |      PKG      | Category |     In Production Pkg?      | Notes                                                               |
-| ------------- | :-----------: | :------: | :-------------------------: | ------------------------------------------------------------------- |
-| RegExp DoS    | `trim@<0.0.3` |   High   | No _(DevDependency/Linter)_ | waiting for `remark-parse@9` release, owner will not patch `v8.0.3` |
+| Vulnerability     | PKG | Category | Notes |
+| ----------------- | :-: | :------: | :---: |
+| 0 vulnerabilities |
+
+---
 
 ## Contributors
 
